@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Notas App',
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }
@@ -61,8 +61,8 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(primaryColor),
-                  shape: MaterialStateProperty.all(
+                  backgroundColor: const WidgetStatePropertyAll(primaryColor),
+                  shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -79,9 +79,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 80.0),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.only(left: 16.0),
                   child: Text("Política de Privacidad"),
