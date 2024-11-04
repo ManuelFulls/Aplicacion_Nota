@@ -11,9 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Notas App',
-      home: HomeScreen(),
+    return MaterialApp(
+      home: const HomeScreen(),
     );
   }
 }
@@ -32,20 +31,25 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 200.0,
               height: 250.0,
-              child: Image.asset('assets/2Inicio.png'),
+              child: Image.asset(
+                  'assets/2Inicio.png'), // Asegúrate de que la imagen esté en la ruta correcta.
             ),
             const Text(
               "Inicia Creando tus Notas",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 50.0,
-                fontWeight: FontWeight.w900,
-                color: primaryColor,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color:
+                    primaryColor, // Asegúrate de definir el color en colores.dart.
               ),
             ),
-            const Text(
-              "Personaliza tus notas, realiza recordatorios para eventos, citas y mucho más ¡Todo en un solo lugar!",
-              textAlign: TextAlign.center,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Personaliza tus notas, realiza recordatorios para eventos, citas y mucho más ¡Todo en un solo lugar!",
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 50.0),
             SizedBox(
@@ -60,12 +64,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 },
-                style: ButtonStyle(
-                  backgroundColor: const WidgetStatePropertyAll(primaryColor),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      primaryColor, // Asegúrate de definir el color en colores.dart.
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
                 child: const Text(
@@ -79,16 +82,16 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 80.0),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: Text("Política de Privacidad"),
+                Container(
+                  margin: const EdgeInsets.only(left: 16.0),
+                  child: const Text("Política de Privacidad"),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: Text("Términos y condiciones"),
+                Container(
+                  margin: const EdgeInsets.only(right: 16.0),
+                  child: const Text("Términos y condiciones"),
                 ),
               ],
             ),
@@ -154,6 +157,8 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
     String title = '';
     String content = '';
     DateTime deliveryDate = DateTime.now();
+    final deliveryDateController = TextEditingController(
+        text: DateFormat('dd/MM/yyyy').format(deliveryDate));
 
     showDialog(
       context: context,
@@ -177,6 +182,7 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                   },
                 ),
                 TextField(
+                  controller: deliveryDateController,
                   decoration: const InputDecoration(
                       labelText: "Fecha de entrega (dd/MM/yyyy)"),
                   readOnly: true,
@@ -188,14 +194,11 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                       lastDate: DateTime(2101),
                     );
                     if (pickedDate != null) {
-                      setState(() {
-                        deliveryDate = pickedDate;
-                      });
+                      deliveryDate = pickedDate;
+                      deliveryDateController.text =
+                          DateFormat('dd/MM/yyyy').format(deliveryDate);
                     }
                   },
-                  controller: TextEditingController(
-                    text: DateFormat('dd/MM/yyyy').format(deliveryDate),
-                  ),
                 ),
               ],
             ),
@@ -226,6 +229,9 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
     String title = notes[index].title;
     String content = notes[index].content;
     DateTime deliveryDate = notes[index].deliveryDate;
+    final deliveryDateController = TextEditingController(
+        text: DateFormat('dd/MM/yyyy').format(deliveryDate));
+
     showDialog(
       context: context,
       builder: (context) {
@@ -250,6 +256,7 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                   },
                 ),
                 TextField(
+                  controller: deliveryDateController,
                   decoration: const InputDecoration(
                       labelText: "Fecha de entrega (dd/MM/yyyy)"),
                   readOnly: true,
@@ -261,14 +268,11 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                       lastDate: DateTime(2101),
                     );
                     if (pickedDate != null) {
-                      setState(() {
-                        deliveryDate = pickedDate;
-                      });
+                      deliveryDate = pickedDate;
+                      deliveryDateController.text =
+                          DateFormat('dd/MM/yyyy').format(deliveryDate);
                     }
                   },
-                  controller: TextEditingController(
-                    text: DateFormat('dd/MM/yyyy').format(deliveryDate),
-                  ),
                 ),
               ],
             ),
@@ -302,7 +306,7 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            fontSize: 45.0,
+            fontSize: 24.0,
           ),
         ),
         centerTitle: true,
@@ -353,7 +357,7 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                           ),
                           const SizedBox(height: 4.0),
                           Text(
-                            note.content,
+                            "Fecha de entrega: ${DateFormat('dd/MM/yyyy').format(note.deliveryDate)}",
                             style: const TextStyle(
                               fontSize: 14.0,
                               color: Colors.white,
@@ -361,19 +365,21 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                           ),
                           const SizedBox(height: 4.0),
                           Text(
-                            "Entregar: ${DateFormat('dd/MM/yyyy').format(note.deliveryDate)}",
+                            note.content,
                             style: const TextStyle(
-                              fontSize: 12.0,
+                              fontSize: 14.0,
                               color: Colors.white,
                             ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                       Positioned(
-                        top: 5.0,
-                        right: 5.0,
+                        top: 10.0,
+                        right: 10.0,
                         child: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.white),
                           onPressed: () {
                             _deleteNote(index);
                           },
@@ -386,11 +392,12 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
             },
           ),
           Positioned(
-            bottom: 20.0,
-            right: 20.0,
+            bottom: 16.0,
+            right: 16.0,
             child: FloatingActionButton(
+              backgroundColor: const Color(0xFF00B4D8),
               onPressed: _showAddNoteDialog,
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.add, color: Colors.white, size: 30.0),
             ),
           ),
         ],
