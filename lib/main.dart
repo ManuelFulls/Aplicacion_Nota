@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Notas App',
       home: const HomeScreen(),
     );
   }
@@ -34,20 +35,19 @@ class HomeScreen extends StatelessWidget {
               child: Image.asset('assets/2Inicio.png'),
             ),
             const Text(
-              "Inicia Creando tus Notas ",
+              "Inicia Creando tus Notas",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.w900,
-                  color: primaryColor),
+                fontSize: 50.0,
+                fontWeight: FontWeight.w900,
+                color: primaryColor,
+              ),
             ),
             const Text(
-              "Personaliza tus notas, realiza recordatorio para eventos, citas y mucho más ¡Todo en un solo lugar!",
+              "Personaliza tus notas, realiza recordatorios para eventos, citas y mucho más ¡Todo en un solo lugar!",
               textAlign: TextAlign.center,
             ),
-            const SizedBox(
-              height: 50.0,
-            ),
+            const SizedBox(height: 50.0),
             SizedBox(
               width: 166.0,
               height: 44.0,
@@ -71,25 +71,24 @@ class HomeScreen extends StatelessWidget {
                 child: const Text(
                   "¡EscribeYa!",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 80.0,
-            ),
+            const SizedBox(height: 80.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 16.0),
-                  child: const Text("Política de Privacidad"),
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text("Política de Privacidad"),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(right: 16.0),
-                  child: const Text("Términos y condiciones"),
+                Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Text("Términos y condiciones"),
                 ),
               ],
             ),
@@ -188,14 +187,15 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2101),
                     );
-                    if (pickedDate != null && pickedDate != deliveryDate) {
+                    if (pickedDate != null) {
                       setState(() {
                         deliveryDate = pickedDate;
                       });
                     }
                   },
                   controller: TextEditingController(
-                      text: DateFormat('dd/MM/yyyy').format(deliveryDate)),
+                    text: DateFormat('dd/MM/yyyy').format(deliveryDate),
+                  ),
                 ),
               ],
             ),
@@ -260,14 +260,15 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2101),
                     );
-                    if (pickedDate != null && pickedDate != deliveryDate) {
+                    if (pickedDate != null) {
                       setState(() {
                         deliveryDate = pickedDate;
                       });
                     }
                   },
                   controller: TextEditingController(
-                      text: DateFormat('dd/MM/yyyy').format(deliveryDate)),
+                    text: DateFormat('dd/MM/yyyy').format(deliveryDate),
+                  ),
                 ),
               ],
             ),
@@ -352,7 +353,7 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                           ),
                           const SizedBox(height: 4.0),
                           Text(
-                            "Fecha de entrega: ${DateFormat('dd/MM/yyyy').format(note.deliveryDate)}",
+                            note.content,
                             style: const TextStyle(
                               fontSize: 14.0,
                               color: Colors.white,
@@ -360,21 +361,19 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
                           ),
                           const SizedBox(height: 4.0),
                           Text(
-                            note.content,
+                            "Entregar: ${DateFormat('dd/MM/yyyy').format(note.deliveryDate)}",
                             style: const TextStyle(
-                              fontSize: 14.0,
+                              fontSize: 12.0,
                               color: Colors.white,
                             ),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                       Positioned(
-                        top: 10.0,
-                        right: 10.0,
+                        top: 5.0,
+                        right: 5.0,
                         child: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.white),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () {
                             _deleteNote(index);
                           },
@@ -387,23 +386,11 @@ class _EscribeYaScreenState extends State<EscribeYaScreen> {
             },
           ),
           Positioned(
-            bottom: 16.0,
-            right: 16.0,
-            child: Container(
-              width: 70.0,
-              height: 70.0,
-              decoration: BoxDecoration(
-                color: const Color(0xFF00B4D8),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                onPressed: _showAddNoteDialog,
-              ),
+            bottom: 20.0,
+            right: 20.0,
+            child: FloatingActionButton(
+              onPressed: _showAddNoteDialog,
+              child: const Icon(Icons.add),
             ),
           ),
         ],
