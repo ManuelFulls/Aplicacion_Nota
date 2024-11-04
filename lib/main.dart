@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                   Container(
                       margin: const EdgeInsets.only(
                           right: 16.0), // Margin a la izquierda
-                      child: const Text("Términos y condiciones"))
+                      child: const Text("Términos fffgit ady condiciones"))
                 ],
               ),
             ],
